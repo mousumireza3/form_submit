@@ -1,7 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
-// import 'package:firebase_core/firebase_core.dart';
 
 void main(List<String> args) {
   runApp(MyApp());
@@ -33,111 +32,14 @@ class _HomePageState extends State<HomePage> {
   var nameController = new TextEditingController();
   var ageController = new TextEditingController();
   var emailController = new TextEditingController();
+  var cityController = new TextEditingController();
+  var countryController = new TextEditingController();
+  var phoneNumberController = new TextEditingController();
+  var passwordController = new TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final databaseRef = FirebaseDatabase.instance.reference();
-
-  // Widget _nameField() {
-  //   return TextFormField(
-  //     decoration: InputDecoration(labelText: "Name"),
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return "Name is Required";
-  //       }
-  //     },
-  //     onSaved: (value) {
-  //       _name = value;
-  //     },
-  //   );
-  // }
-
-  // Widget _ageField() {
-  //   return TextFormField(
-  //     decoration: InputDecoration(labelText: "Age"),
-  //     keyboardType: TextInputType.number,
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return "Age is Required";
-  //       }
-  //     },
-  //     onSaved: (value) {
-  //       _age = value;
-  //     },
-  //   );
-  // }
-
-  // Widget _emailField() {
-  //   return TextFormField(
-  //     decoration: InputDecoration(labelText: "Email"),
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return "Email is Required";
-  //       }
-  //     },
-  //     onSaved: (value) {
-  //       _email = value;
-  //     },
-  //   );
-  // }
-
-  // Widget _addressField() {
-  //   return TextFormField(
-  //     decoration: InputDecoration(labelText: "Address"),
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return "Address is Required";
-  //       }
-  //     },
-  //     onSaved: (value) {
-  //       _address = value;
-  //     },
-  //   );
-  // }
-
-  // Widget _countryField() {
-  //   return TextFormField(
-  //     decoration: InputDecoration(labelText: "Country"),
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return "Country is Required";
-  //       }
-  //     },
-  //     onSaved: (value) {
-  //       _country = value;
-  //     },
-  //   );
-  // }
-
-  // Widget _phoneNumberField() {
-  //   return TextFormField(
-  //     decoration: InputDecoration(labelText: "Phone Number"),
-  //     keyboardType: TextInputType.phone,
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return "Phone Number is Required";
-  //       }
-  //     },
-  //     onSaved: (value) {
-  //       _phoneNumber = value;
-  //     },
-  //   );
-  // }
-
-  // Widget _passwordField() {
-  //   return TextFormField(
-  //     decoration: InputDecoration(labelText: "Password"),
-  //     obscureText: true,
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return "Password is Required";
-  //       }
-  //     },
-  //     onSaved: (value) {
-  //       _password = value;
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -194,6 +96,7 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                     TextFormField(
+                      controller: cityController,
                       decoration: InputDecoration(labelText: "City"),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -205,6 +108,7 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                     TextFormField(
+                      controller: countryController,
                       decoration: InputDecoration(labelText: "Country"),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -216,6 +120,7 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                     TextFormField(
+                      controller: phoneNumberController,
                       decoration: InputDecoration(labelText: "Phone Number"),
                       keyboardType: TextInputType.phone,
                       validator: (value) {
@@ -228,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                     TextFormField(
+                      controller: passwordController,
                       decoration: InputDecoration(labelText: "Password"),
                       obscureText: true,
                       validator: (value) {
@@ -239,28 +145,31 @@ class _HomePageState extends State<HomePage> {
                         _password = value;
                       },
                     ),
-                    // _nameField(),
-                    // _ageField(),
-                    // _emailField(),
-                    // _addressField(),
-                    // _countryField(),
-                    // _phoneNumberField(),
-                    // _passwordField(),
                     SizedBox(
                       height: 50.0,
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          // if (!_formKey.currentState!.validate()) {
-                          //   return;
-                          // }
-                          // _formKey.currentState!.save();
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          }
+                          _formKey.currentState!.save();
 
                           if (nameController.text.isNotEmpty &&
                               ageController.text.isNotEmpty &&
-                              emailController.text.isNotEmpty) {
-                            insertData(nameController.text, ageController.text,
-                                emailController.text);
+                              emailController.text.isNotEmpty &&
+                              cityController.text.isNotEmpty &&
+                              countryController.text.isNotEmpty &&
+                              phoneNumberController.text.isNotEmpty &&
+                              passwordController.text.isNotEmpty) {
+                            insertData(
+                                nameController.text,
+                                ageController.text,
+                                emailController.text,
+                                cityController.text,
+                                countryController.text,
+                                phoneNumberController.text,
+                                passwordController.text);
                           }
 
                           showDialog(
@@ -289,16 +198,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void insertData(String name, String age, String email) {
+  void insertData(String name, String age, String email, String city,
+      String country, String phoneNumber, String password) {
     String key = databaseRef.child("path").push().key;
-    databaseRef.child("path").child('dfdfhfd').set({
+    databaseRef.child("path").child(key).set({
       "id": key,
       'name': name,
       'age': age,
       'email': email,
+      'city': city,
+      'country': country,
+      'phoneNumber': phoneNumber,
+      'password': password,
     });
     nameController.clear();
     ageController.clear();
     emailController.clear();
+    cityController.clear();
+    countryController.clear();
+    phoneNumberController.clear();
+    passwordController.clear();
   }
 }
