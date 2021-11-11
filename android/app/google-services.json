@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "710707521267",
+    "firebase_url": "https://formsubmit-f1920-default-rtdb.firebaseio.com",
+    "project_id": "formsubmit-f1920",
+    "storage_bucket": "formsubmit-f1920.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710707521267:android:2803c5759594c31e0bf986",
+        "android_client_info": {
+          "package_name": "com.example.form_submit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710707521267-q4g7mk4lm0t0f8pvjpg44u1nf9k8ns55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr0AveLdIgx0f0fQbGq9QlPb5qzqnPY4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710707521267-q4g7mk4lm0t0f8pvjpg44u1nf9k8ns55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
